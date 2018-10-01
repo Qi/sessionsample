@@ -18,6 +18,7 @@ package com.example.android.mediasession.service.players;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.SystemClock;
 import android.support.v4.media.MediaMetadataCompat;
@@ -28,6 +29,8 @@ import com.example.android.mediasession.service.PlaybackInfoListener;
 import com.example.android.mediasession.service.PlayerAdapter;
 import com.example.android.mediasession.service.contentcatalogs.MusicLibrary;
 import com.example.android.mediasession.ui.MainActivity;
+
+import java.io.IOException;
 
 /**
  * Exposes the functionality of the {@link MediaPlayer} and implements the {@link PlayerAdapter}
@@ -85,6 +88,23 @@ public final class MediaPlayerAdapter extends PlayerAdapter {
         mCurrentMedia = metadata;
         final String mediaId = metadata.getDescription().getMediaId();
         playFile(MusicLibrary.getMusicFilename(mediaId));
+    }
+
+    @Override
+    public void playFromUrl(String url) {
+        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        try {
+            mMediaPlayer.reset();
+            mMediaPlayer.setDataSource(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            mMediaPlayer.prepare(); // might take long! (for buffering, etc)
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mMediaPlayer.start();
     }
 
     @Override

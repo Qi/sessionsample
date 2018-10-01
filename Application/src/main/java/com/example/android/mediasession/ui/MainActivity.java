@@ -17,6 +17,7 @@
 package com.example.android.mediasession.ui;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.media.MediaBrowserCompat;
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case R.id.button_next:
-                    mMediaBrowserHelper.getTransportControls().skipToNext();
+                    mMediaBrowserHelper.getTransportControls().playFromUri(Uri.parse("https://dts.podtrac.com/redirect.mp3/rss.art19.com/episodes/d5c7a6d7-f043-42fa-812f-cc9eacafab97.mp3"), null);
                     break;
             }
         }

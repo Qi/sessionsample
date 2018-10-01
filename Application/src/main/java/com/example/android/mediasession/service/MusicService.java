@@ -18,6 +18,7 @@ package com.example.android.mediasession.service;
 
 import android.app.Notification;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -143,6 +144,11 @@ public class MusicService extends MediaBrowserServiceCompat {
 
             mPlayback.playFromMedia(mPreparedMedia);
             Log.d(TAG, "onPlayFromMediaId: MediaSession active");
+        }
+
+        @Override
+        public void onPlayFromUri(Uri uri, Bundle extras) {
+            mPlayback.playFromUrl(uri.toString());
         }
 
         @Override
